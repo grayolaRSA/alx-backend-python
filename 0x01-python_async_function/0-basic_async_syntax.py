@@ -5,16 +5,16 @@ import asyncio
 import random
 
 
-async def wait_random(max_delay: int = 10):
+async def wait_random(max_delay: int = 10) -> float:
     """ async delay function """
-    delay = random.uniform(0, max_delay)
+    delay: float = random.uniform(0, max_delay)
     await asyncio.sleep(delay)
     return delay
 
 
-async def main():
+async def main() -> None:
     """ main function to run wait_random function """
-    res = await asyncio.run(wait_random())
+    res: float = await wait_random()
     return res
 
 if __name__ == "__main__":
