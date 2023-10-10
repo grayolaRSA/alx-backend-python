@@ -18,7 +18,7 @@ async def async_comprehension() -> List[float]:
 
 async def main():
     values = await async_comprehension()
-    print (values)
+    print(values)
 
 if __name__ == "__main__":
     asyncio.run(main())
