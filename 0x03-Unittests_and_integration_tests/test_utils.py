@@ -4,9 +4,8 @@
 
 import unittest
 from utils import access_nested_map
-from typing import Mapping, Sequence, Callable, Optional
-from functools import wraps
-from parameterized import parameterized, parameterized_class
+from typing import Mapping, Sequence, Optional
+from parameterized import parameterized
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -18,7 +17,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ("Test case 3", {"a": {"b": 2}}, ("a", "b"), 2),
          ])
     def test_access_nested_map(self, name: str, nested_map: Mapping,
-                               path: Sequence, expected: any):
+                               path: Sequence, expected: any) -> any:
         """method to test access_nested_map method"""
 
         result = access_nested_map(nested_map, path)
