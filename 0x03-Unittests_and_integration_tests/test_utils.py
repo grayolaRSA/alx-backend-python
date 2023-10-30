@@ -2,9 +2,8 @@
 """test module for utils module"""
 
 
-import json
-import requests
 import unittest
+from functools import wraps
 from unittest.mock import Mock, patch, MagicMock
 from utils import access_nested_map, get_json
 from typing import Mapping, Sequence, Optional, Callable, Dict, List
@@ -41,7 +40,7 @@ class TestAccessNestedMap(unittest.TestCase):
 class TestGetJson(unittest.TestCase):
     """class for unittests for get_json function"""
 
-    @patch('utils.requests')
+    @patch('utils.requests.get')
     @parameterized.expand([
         ("Test 1", "http://example.com", {"payload": True}),
         ("Test 2", "http://holberton.io", {"payload": False}),
@@ -51,14 +50,54 @@ class TestGetJson(unittest.TestCase):
         mock_response = MagicMock()
         mock_response.json.return_value = test_payload
 
-        with patch('utils.requests') as mock_requests:
-            mock_requests.get.return_value = mock_response
+        with patch('utils.requests.get') as mock_get:
+            mock_get.return_value = mock_response
 
             result = get_json(test_url)
 
             self.assertEqual(result, test_payload)
 
-            mock_requests.get.assert_called_once_with(test_url)
+            mock_get.assert_called_once_with(test_url)
+
+
+class TestMemoize(unittest.TestCase):
+    """class for memoize methods"""
+
+    def test_memoize(self):
+        """method to test cacheing of method returns"""
+
+        def memoize(func):
+            """memoize function to cache results"""
+            cache = {}
+
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                key = str(args) + str(kwargs)
+
+                if key not in cache:
+                    cache[key] = func(*args, **kwargs)
+
+                return cache[key]
+
+            return wrapper
+
+        class TestClass:
+
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+            @patch('TestClass.a_method')
+            def test_a_property(self):
+                """test method for a_property"""
+                mock_property = MagicMock
+                mock_property.return_value = self.a_method()
+
+                with patch('a_method') as mock_property:
+                    mock_property.assert_called_once()
 
 
 if __name__ == '__main__':
