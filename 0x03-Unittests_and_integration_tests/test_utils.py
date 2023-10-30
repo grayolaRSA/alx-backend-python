@@ -82,12 +82,15 @@ class TestMemoize(unittest.TestCase):
             return wrapper
 
         class TestClass:
+            """test class for memoize methods"""
 
             def a_method(self):
+                """a test method"""
                 return 42
 
             @memoize
             def a_property(self):
+                """another test method"""
                 return self.a_method()
 
             @patch('TestClass.a_method')
