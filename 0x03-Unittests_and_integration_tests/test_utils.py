@@ -46,7 +46,7 @@ class TestGetJson(unittest.TestCase):
         ("Test 2", "http://holberton.io", {"payload": False}),
     ])
     def test_get_json(self, name: str, test_url: str, test_payload: Dict):
-        """method to test get_json method"""
+        """method to test get_json method to mock API request"""
         mock_response = MagicMock()
         mock_response.json.return_value = test_payload
 
