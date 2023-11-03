@@ -47,7 +47,6 @@ class TestGetJson(unittest.TestCase):
     @patch('utils.requests.get')
     def test_get_json(self, test_url: str, test_payload: Dict, mock_get: Mock):
         """method to test get_json method to mock API request
-        to get a mock HTTP response
         """
         mock_response = MagicMock()
         mock_response.json.return_value = test_payload
