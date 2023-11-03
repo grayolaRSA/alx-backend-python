@@ -14,11 +14,11 @@ class TestAccessNestedMap(unittest.TestCase):
     """class for unittests for utils module"""
 
     @parameterized.expand([
-        ("Test case 1", {"a": 1}, ("a",), 1),
-        ("Test case 2", {"a": {"b": 2}}, ("a",), {"b": 2}),
-        ("Test case 3", {"a": {"b": 2}}, ("a", "b"), 2),
+        ({"a": 1}, ("a",), 1),
+        ({"a": {"b": 2}}, ("a",), {"b": 2}),
+        ({"a": {"b": 2}}, ("a", "b"), 2),
          ])
-    def test_access_nested_map(self, name: str, nested_map: Mapping,
+    def test_access_nested_map(self, nested_map: Mapping,
                                path: Sequence, expected: any):
         """method to test access_nested_map method"""
         result = access_nested_map(nested_map, path)
